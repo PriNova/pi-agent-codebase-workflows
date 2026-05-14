@@ -2,7 +2,7 @@
 
 Pi package with skills and prompt templates for documented-codebase workflows.
 
-Credits: built for [pi](https://github.com/earendil-works/pi-mono), created by Mario Zechner ([@badlogicgames](https://github.com/badlogicgames)) and the Earendil Works team ([@earendil-works](https://github.com/earendil-works)).
+Credits: built for [pi](https://github.com/earendil-works/pi-mono), created by Mario Zechner ([GitHub: @badlogic](https://github.com/badlogic), [X: @badlogicgames](https://x.com/badlogicgames)) and the Earendil Works team ([@earendil-works](https://github.com/earendil-works)).
 
 ## Included skills
 
