@@ -7,6 +7,10 @@ description: Safe-change workflow for documented codebases. Use for bug fixes, f
 
 Goal: make changes in an existing documented codebase without architecture drift.
 
+## Task/Focus Arguments
+
+Prompt arguments may include a target, focus, or scope. Use these to limit investigation and implementation to a module, package, app, service, directory, user flow, risk cluster, or bounded domain area. In monorepos, prefer scoped preflight/design first, then broader consolidation only when durable docs need repo-level reconciliation.
+
 ## Core Rules
 
 - Preflight comes first for every non-trivial task.

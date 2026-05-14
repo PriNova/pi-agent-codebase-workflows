@@ -58,6 +58,22 @@ pi install /absolute/path/to/pi-agent-codebase-workflows
 pi -e /absolute/path/to/pi-agent-codebase-workflows
 ```
 
+## Focus/scoping arguments
+
+Reconstruction prompts accept optional `[focus]` arguments. Use them to scope analysis to a module, package, app, service, directory, or bounded domain area, especially in monorepos.
+
+Example:
+
+```bash
+/recon-01-inventory packages/api
+/recon-02-architecture apps/mobile auth flow
+/recon-all services/billing
+```
+
+Scoped passes should produce clearly labeled observations in `docs/agent/*.md`. Later `/recon-08-consolidate` can reconcile multiple scoped artifacts into repo-level guidance.
+
+Review and risk-fix prompts also accept scope/focus arguments for targeted reviews or fixes.
+
 ## Artifact locations
 
 Skills write durable project-agent docs under:

@@ -7,6 +7,10 @@ description: Architecture-aware code review for current diffs in documented code
 
 Goal: review proposed changes for correctness, drift, data consistency, side-effect boundary violations, and missing tests.
 
+## Scope Argument
+
+Review prompts accept an optional `[scope]` argument. Use it to focus review on a module, package, app, service, directory, or bounded domain area when a diff spans multiple areas. Still inspect immediate dependencies and contracts needed to judge correctness.
+
 ## Rules
 
 - Do not edit code.

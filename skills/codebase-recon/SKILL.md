@@ -40,6 +40,24 @@ docs/
       0001-observed-architecture.md
 ```
 
+## Focus Argument
+
+Pass prompts accept an optional `[focus]` argument. Use it to scope reconstruction to a module, package, app, service, directory, or bounded domain area, especially in monorepos.
+
+Examples:
+- `/recon-01-inventory packages/api`
+- `/recon-02-architecture apps/mobile auth flow`
+- `/skill:codebase-recon pass-03-data-invariants services/billing`
+
+When focus is provided:
+- inspect only the focused area plus immediate dependencies, entry points, tests, and external boundaries needed to understand it
+- write findings into the standard `docs/agent/*.md` artifacts with clear scope labels
+- include evidence paths that show the scoped boundary
+- mark interactions with the rest of the repo as external dependencies/boundaries
+- leave cross-scope reconciliation for Pass 8 consolidation
+
+This enables module/package-level reconstruction first, then later consolidation into repo-level artifacts.
+
 ## Execution Modes
 
 Default: numbered-pass mode.
