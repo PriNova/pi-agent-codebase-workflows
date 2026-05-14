@@ -2,6 +2,8 @@
 
 Pi package with skills and prompt templates for documented-codebase workflows.
 
+Credits: built for [pi](https://github.com/earendil-works/pi-mono), created by Mario Zechner ([@badlogicgames](https://github.com/badlogicgames)) and the Earendil Works team ([@earendil-works](https://github.com/earendil-works)).
+
 ## Included skills
 
 - `codebase-recon` — reconstruct durable project understanding into `docs/agent/*.md` plus project-root `AGENTS.md`.
