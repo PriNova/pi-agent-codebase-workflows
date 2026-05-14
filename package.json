@@ -1,0 +1,39 @@
+{
+  "name": "pi-agent-codebase-workflows",
+  "version": "0.1.0",
+  "description": "Pi skills and prompt templates for codebase reconstruction, architecture-aware review, and safe changes.",
+  "license": "MIT",
+  "author": "PriNova",
+  "type": "module",
+  "keywords": [
+    "pi-package",
+    "pi",
+    "agent-skills",
+    "codebase-recon",
+    "code-review",
+    "architecture",
+    "safe-change"
+  ],
+  "homepage": "https://github.com/PriNova/pi-agent-codebase-workflows#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PriNova/pi-agent-codebase-workflows.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PriNova/pi-agent-codebase-workflows/issues"
+  },
+  "files": [
+    "skills/",
+    "prompts/",
+    "README.md",
+    "LICENSE"
+  ],
+  "pi": {
+    "skills": [
+      "./skills"
+    ],
+    "prompts": [
+      "./prompts"
+    ]
+  }
+}
