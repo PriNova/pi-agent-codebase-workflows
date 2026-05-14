@@ -264,7 +264,9 @@ Task: consolidate artifacts.
 
 Rules:
 - No source code edits.
-- Remove contradictions and duplication.
+- Reconcile contradictions; do not silently delete disagreement evidence.
+- When scoped passes disagree, resolve from source evidence where possible, assign/clarify ownership for shared contracts where evidence supports it, or record the disagreement as a drift risk / `Known Unknown` with cited evidence.
+- De-duplicate repeated facts only after preserving the strongest evidence paths and any materially different scope-specific observations.
 - Keep root `AGENTS.md` short and operational.
 - Ensure `ARCHITECTURE.md` describes structure, not line-by-line code.
 - Ensure `INVARIANTS.md` contains rules, not implementation notes.

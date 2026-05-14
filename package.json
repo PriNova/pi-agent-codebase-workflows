@@ -1,6 +1,6 @@
 {
   "name": "pi-agent-codebase-workflows",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Pi skills and prompt templates for codebase reconstruction, architecture-aware review, and safe changes.",
   "license": "MIT",
   "author": "PriNova",
