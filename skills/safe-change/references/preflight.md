@@ -6,7 +6,7 @@ Read first:
 - `docs/agent/CHANGE_GUIDE.md` if present
 - `docs/agent/SCOPES.md` if present; then apply `references/scoped-docs.md`
 
-If scoped docs match the task, read nearest scoped `README.md` and only task-relevant scoped docs first. Then read only missing or repo-wide top-level docs relevant to task:
+If scoped docs match the task, read nearest scoped `README.md` only if present and only task-relevant scoped docs first. Then read only missing or repo-wide top-level docs relevant to task:
 - `docs/agent/ARCHITECTURE.md` or scoped `ARCHITECTURE.md` for module/flow changes
 - `docs/agent/DATA_MODEL.md` or scoped `DATA_MODEL.md` for data changes
 - `docs/agent/INVARIANTS.md` or scoped `INVARIANTS.md` for rule-sensitive changes

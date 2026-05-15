@@ -84,11 +84,11 @@ docs/agent/
   SCOPES.md
   scopes/
     by-path/packages/api/
-      README.md
+      README.md      # optional local index for large/complex scopes
       ARCHITECTURE.md
       CONTRACTS.md
     by-domain/auth-flow/
-      README.md
+      README.md      # optional local index for large/complex scopes
       ARCHITECTURE.md
       CONTRACTS.md
 ```

@@ -62,7 +62,7 @@ Focused path passes write hierarchical scoped docs:
 
 ```text
 docs/agent/scopes/by-path/packages/api/
-  README.md
+  README.md          # optional local index for large/complex scopes
   ARCHITECTURE.md
   DATA_MODEL.md
   INVARIANTS.md

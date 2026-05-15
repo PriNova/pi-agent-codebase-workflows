@@ -49,7 +49,7 @@ docs/
   agent/
     scopes/
       by-path/<repo-relative-path>/
-        README.md
+        README.md              # optional local index for large/complex scopes
         REPO_INVENTORY.md
         ARCHITECTURE.md
         DATA_MODEL.md
@@ -60,7 +60,7 @@ docs/
         CHANGE_GUIDE.md
         CONTRACTS.md
       by-domain/<domain-slug>/
-        README.md
+        README.md              # optional local index for large/complex scopes
         ARCHITECTURE.md
         DATA_MODEL.md
         INVARIANTS.md
@@ -92,7 +92,7 @@ When focus is provided:
 - if focus is an existing repo-relative path, write to `docs/agent/scopes/by-path/<focus>/`
 - if focus is not a path, write to `docs/agent/scopes/by-domain/<slug>/`
 - update `docs/agent/SCOPES.md` with scope path, docs path, status, ownership, and external contracts
-- create/update scoped `README.md` with scope summary, evidence boundary, doc status, and links to relevant scoped docs
+- optionally create/update scoped `README.md` only when helpful for large/complex scopes; otherwise rely on `SCOPES.md` as the index
 - write pass findings into the scoped artifact for that pass, not into the top-level artifact
 - include evidence paths that show the scoped boundary
 - mark interactions with the rest of the repo as external dependencies/boundaries
