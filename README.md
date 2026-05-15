@@ -72,7 +72,25 @@ Example:
 /recon-all services/billing
 ```
 
-Scoped passes should produce clearly labeled observations in `docs/agent/*.md`. Later `/recon-08-consolidate` can reconcile multiple scoped artifacts into repo-level guidance.
+Without focus, reconstruction writes the traditional top-level `docs/agent/*.md` artifacts. With focus, reconstruction writes hierarchical scoped artifacts and updates `docs/agent/SCOPES.md`:
+
+```text
+docs/agent/
+  SCOPES.md
+  scopes/
+    by-path/packages/api/
+      README.md
+      ARCHITECTURE.md
+      CONTRACTS.md
+    by-domain/auth-flow/
+      README.md
+      ARCHITECTURE.md
+      CONTRACTS.md
+```
+
+Top-level docs remain valid as repo-level summaries/fallbacks. This is backward-compatible with repositories reconstructed before scoped artifacts existed. Later `/recon-08-consolidate` can reconcile multiple scoped artifacts into repo-level guidance.
+
+Safe-change and review workflows read `SCOPES.md` when present, match path scopes by longest prefix, and follow scoped `CONTRACTS.md` links for cross-module APIs, shared types, schemas, events, generated clients, and persistence boundaries.
 
 Review and risk-fix prompts also accept scope/focus arguments for targeted reviews or fixes.
 
@@ -82,6 +100,7 @@ Skills write durable project-agent docs under:
 
 ```text
 docs/agent/
+docs/agent/scopes/**
 ```
 
 Project operating instructions stay at project root:

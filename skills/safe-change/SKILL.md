@@ -11,6 +11,27 @@ Goal: make changes in an existing documented codebase without architecture drift
 
 Prompt arguments may include a target, focus, or scope. Use these to limit investigation and implementation to a module, package, app, service, directory, user flow, risk cluster, or bounded domain area. In monorepos, prefer scoped preflight/design first, then broader consolidation only when durable docs need repo-level reconciliation.
 
+## Scoped Docs Discovery
+
+Safe-change works with both legacy unscoped reconstruction docs and newer hierarchical scoped docs.
+
+If `docs/agent/SCOPES.md` is absent:
+- use the existing top-level `docs/agent/*.md` workflow only
+
+If `docs/agent/SCOPES.md` is present:
+- read it during preflight
+- match task target paths/files to `path` scopes by longest repo-relative path prefix
+- use domain scopes only when task wording, scope tags, or contract links make them relevant
+- read nearest matching scope `README.md` first
+- read only task-relevant scoped docs, then top-level docs as fallback for missing categories or repo-wide rules
+- before trusting a path scope, verify the scoped source path still exists; if not, treat scoped docs as historical/stale and fall back to top-level/source evidence
+- if multiple scopes match with equal confidence, read all relevant scope summaries and note ambiguity in preflight
+
+Cross-scope contract rule:
+- when touched code imports, exposes, serializes, persists, or validates data across module/package/service boundaries, read local scoped `CONTRACTS.md` and linked owner `CONTRACTS.md` if present
+- owner contract docs are source of truth; consumer docs describe local usage/risk only
+- if contract ownership is unclear, identify it as a risk before implementation
+
 ## Core Rules
 
 - Preflight comes first for every non-trivial task.
@@ -27,14 +48,16 @@ Prompt arguments may include a target, focus, or scope. Use these to limit inves
 
 Read first:
 - `docs/agent/CHANGE_GUIDE.md` if present
+- `docs/agent/SCOPES.md` if present
 
-Then read only docs relevant to task:
-- `docs/agent/ARCHITECTURE.md` for module/flow changes
-- `docs/agent/DATA_MODEL.md` for data changes
-- `docs/agent/INVARIANTS.md` for rule-sensitive changes
-- `docs/agent/DEPENDENCY_RULES.md` for imports/module boundaries
-- `docs/agent/RISK_REGISTER.md` for risky areas
-- `docs/agent/DESIGN_ISSUES.md` for refactoring/design work
+If scoped docs match the task, read nearest scoped `README.md` and only task-relevant scoped docs first. Then read only missing or repo-wide top-level docs relevant to task:
+- `docs/agent/ARCHITECTURE.md` or scoped `ARCHITECTURE.md` for module/flow changes
+- `docs/agent/DATA_MODEL.md` or scoped `DATA_MODEL.md` for data changes
+- `docs/agent/INVARIANTS.md` or scoped `INVARIANTS.md` for rule-sensitive changes
+- `docs/agent/DEPENDENCY_RULES.md` or scoped `DEPENDENCY_RULES.md` for imports/module boundaries
+- `docs/agent/RISK_REGISTER.md` or scoped `RISK_REGISTER.md` for risky areas
+- `docs/agent/DESIGN_ISSUES.md` or scoped `DESIGN_ISSUES.md` for refactoring/design work
+- scoped `CONTRACTS.md` files for touched cross-scope APIs, shared types, schemas, events, generated clients, or persistence boundaries
 
 Before editing code, produce:
 1. Task classification: bug fix / feature / refactoring / risk-fix / test-only / docs-only
@@ -185,6 +208,7 @@ Use when risk-derived tests fail or `RISK_REGISTER.md` identifies actionable ris
 
 Read first:
 - `docs/agent/CHANGE_GUIDE.md`
+- `docs/agent/SCOPES.md` if present, then matching scoped risk/invariant/data docs when applicable
 - `docs/agent/RISK_REGISTER.md`
 - `docs/agent/INVARIANTS.md`
 - `docs/agent/DATA_MODEL.md`
