@@ -25,6 +25,7 @@
   "files": [
     "skills/",
     "prompts/",
+    "docs/",
     "README.md",
     "LICENSE"
   ],

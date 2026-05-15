@@ -10,6 +10,11 @@ Credits: built for [pi](https://github.com/earendil-works/pi-mono), created by M
 - `arch-code-review` — review current diffs against documented architecture, invariants, data model, dependency rules, risks, and tests.
 - `safe-change` — preflight, design/diagnosis, implementation, validation, and semantic docs update workflow for safe code changes.
 
+## Usage docs
+
+- [Tutorial](docs/TUTORIAL.md) — end-to-end workflows for small repos, monorepos, scoped reconstruction, safe changes, reviews, consolidation, and legacy docs.
+- [Troubleshooting](docs/TROUBLESHOOTING.md) — common reconstruction, scoping, contract, review, and validation issues.
+
 ## Included prompt templates
 
 Reconstruction:
