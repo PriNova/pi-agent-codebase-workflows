@@ -117,7 +117,9 @@ The workflows intentionally avoid `docs/AGENTS.md` and `docs/agent/AGENTS.md`.
 skills/
   codebase-recon/SKILL.md
   arch-code-review/SKILL.md
-  safe-change/SKILL.md
+  safe-change/
+    SKILL.md
+    references/*.md
 prompts/
   *.md
 ```
