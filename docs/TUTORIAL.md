@@ -1,6 +1,6 @@
 # Tutorial
 
-This package provides pi skills and prompt templates for reconstructing codebase knowledge, making safe changes, and reviewing architecture drift.
+This package provides pi skills and prompt templates for starting new projects safely, reconstructing codebase knowledge, making safe changes, and reviewing architecture drift.
 
 ## Install
 
@@ -17,6 +17,62 @@ pi install /absolute/path/to/pi-agent-codebase-workflows
 # or one-off
 pi -e /absolute/path/to/pi-agent-codebase-workflows
 ```
+
+## Start a new project safely
+
+For small/simple greenfield projects, run all safe-start passes:
+
+```text
+/safe-start-all build a small habit tracker web app
+```
+
+For larger, higher-risk, or learning-oriented projects, run numbered passes so each decision is reviewable:
+
+```text
+/safe-start-01-intent
+/safe-start-02-data-flow
+/safe-start-03-architecture
+/safe-start-04-contract-docs
+/safe-start-05-scaffold-plan
+/safe-start-06-validation
+/safe-start-07-vertical-slice
+/safe-start-08-handoff
+```
+
+Safe-start is data-first:
+
+```text
+input data -> validation/normalization -> domain transformation -> output data/side effects
+```
+
+Module boundaries are derived after data flow is understood.
+
+At the start, choose guidance level:
+
+```text
+Freshman  - more explanations, command notes, simple questions
+Standard  - concise but guided
+Expert    - compact, assumption-driven, contract/ADR oriented
+```
+
+Safe-start creates project operating docs such as:
+
+```text
+README.md
+AGENTS.md
+docs/agent/PROJECT_INTENT.md
+docs/agent/DATA_FLOW.md
+docs/agent/DATA_MODEL.md
+docs/agent/INVARIANTS.md
+docs/agent/ARCHITECTURE.md
+docs/agent/DEPENDENCY_RULES.md
+docs/agent/RISK_REGISTER.md
+docs/agent/TESTING_STRATEGY.md
+docs/agent/CHANGE_GUIDE.md
+docs/agent/VALIDATION_BASELINE.md
+```
+
+After `/safe-start-08-handoff`, use `/skill:safe-change` or safe-change prompts for normal feature, bug, and refactor work.
 
 ## Reconstruct a small repo
 

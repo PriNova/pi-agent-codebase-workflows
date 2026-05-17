@@ -1,11 +1,12 @@
 # pi-agent-codebase-workflows
 
-Pi package with skills and prompt templates for documented-codebase workflows.
+Pi package with skills and prompt templates for safe greenfield starts, documented-codebase changes, reconstruction, and reviews.
 
 Credits: built for [pi](https://github.com/earendil-works/pi-mono), created by Mario Zechner ([GitHub: @badlogic](https://github.com/badlogic), [X: @badlogicgames](https://x.com/badlogicgames)) and the Earendil Works team ([@earendil-works](https://github.com/earendil-works)).
 
 ## Included skills
 
+- `safe-start` — create new projects safely with data-first design, project-agent docs, minimal scaffold, validation baseline, and first thin vertical slice.
 - `codebase-recon` — reconstruct durable project understanding into `docs/agent/*.md` plus project-root `AGENTS.md`.
 - `arch-code-review` — review current diffs against documented architecture, invariants, data model, dependency rules, risks, and tests.
 - `safe-change` — preflight, design/diagnosis, implementation, validation, and semantic docs update workflow for safe code changes.
@@ -30,6 +31,18 @@ Reconstruction:
 - `/recon-08-consolidate`
 - `/recon-09-adr`
 - `/recon-10-risk-tests`
+
+Safe-start workflow:
+
+- `/safe-start-all`
+- `/safe-start-01-intent`
+- `/safe-start-02-data-flow`
+- `/safe-start-03-architecture`
+- `/safe-start-04-contract-docs`
+- `/safe-start-05-scaffold-plan`
+- `/safe-start-06-validation`
+- `/safe-start-07-vertical-slice`
+- `/safe-start-08-handoff`
 
 Safe-change workflow:
 
@@ -120,6 +133,7 @@ The workflows intentionally avoid `docs/AGENTS.md` and `docs/agent/AGENTS.md`.
 
 ```text
 skills/
+  safe-start/SKILL.md
   codebase-recon/SKILL.md
   arch-code-review/SKILL.md
   safe-change/
