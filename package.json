@@ -1,6 +1,6 @@
 {
   "name": "pi-agent-codebase-workflows",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Pi skills and prompt templates for safe greenfield starts, codebase reconstruction, architecture-aware review, and safe changes.",
   "license": "MIT",
   "author": "PriNova",

@@ -12,6 +12,18 @@ All notable changes to this project are documented here.
 
 - None.
 
+## [0.3.2] - 2026-05-19
+
+### Added
+
+- Added workflow context-budget and non-duplication guidance across safe-start, codebase-recon, safe-change, and architecture review.
+- Added artifact ownership guidance to keep agent docs as source-of-truth shards or routers instead of redundant summaries.
+
+### Fixes
+
+- Made `codebase-recon` create `VALIDATION_BASELINE.md` during inventory passes and `TESTING_STRATEGY.md` during risk-to-tests planning, including scoped equivalents when relevant.
+- Added safe-change and architecture-review fallbacks when validation baseline or testing strategy docs are missing.
+
 ## [0.3.1] - 2026-05-18
 
 ### Added
