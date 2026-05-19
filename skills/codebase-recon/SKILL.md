@@ -58,6 +58,34 @@ Last validated: unknown | <date>
 
 Treat `safe-start` `planned` docs as intent until source evidence confirms them. Recon output should prefer `observed` evidence and should not silently delete intent docs; mark drift in `DESIGN_ISSUES.md` or `RISK_REGISTER.md` when intent and implementation disagree.
 
+## Context Budget and Non-Duplication
+
+Each artifact should be either a source of truth for one semantic category or an index/router to other docs. Do not make every artifact a summary of every other artifact.
+
+Artifact ownership:
+- `AGENTS.md`: injected operating rules, forbidden shortcuts, validation expectations, and links only.
+- `CHANGE_GUIDE.md`: workflow and doc-routing guide; link to semantic docs instead of repeating them.
+- `SCOPES.md`: routing table for scoped docs; no detailed architecture or contract prose.
+- `REPO_INVENTORY.md`: file tree, entry points, commands index, external boundaries; no architecture judgments.
+- `PROJECT_INTENT.md`: product/user goals, non-goals, constraints, assumptions.
+- `ARCHITECTURE.md`: components, boundaries, side-effect boundaries, high-level execution flows.
+- `DEPENDENCY_RULES.md`: allowed/forbidden dependency direction and import boundaries.
+- `DATA_FLOW.md`: input -> transformation -> output lifecycles, events, request paths, error states.
+- `DATA_MODEL.md`: entities, schemas, IDs, relationships, persisted/serialized formats.
+- `INVARIANTS.md`: rules, forbidden states, lifecycle constraints, enforcement locations.
+- `DESIGN_ISSUES.md`: design drift, unresolved design problems, deferred decisions.
+- `RISK_REGISTER.md`: failure modes with severity, evidence, failure scenario, suggested test/fix.
+- `TESTING_STRATEGY.md`: test approach, coverage gaps, risk-to-test priorities.
+- `VALIDATION_BASELINE.md`: exact commands, last status, blockers, next best checks.
+- `CONTRACTS.md`: cross-scope APIs, schemas, events, generated clients, persistence/deployment interfaces.
+
+Duplication rules:
+- Prefer links/references over copied detail.
+- If `VALIDATION_BASELINE.md` exists, `REPO_INVENTORY.md` may list command names but should link to baseline for status/blockers.
+- If `TESTING_STRATEGY.md` exists, `CHANGE_GUIDE.md` should link to it for testing details.
+- Top-level docs summarize stable repo-wide truths; scoped docs hold local detail.
+- If a required artifact has little evidence, create a compact stub with `No known ...`, `Unknown`, or `Not yet validated`, not boilerplate prose.
+
 ## Target Artifacts
 
 Unscoped/repo-level artifacts required by recon passes:
@@ -346,6 +374,7 @@ Task: write/update root `AGENTS.md`.
 Rules:
 - Keep compact and operational.
 - Link to deeper docs; do not duplicate them.
+- Treat `AGENTS.md` as an index of rules and pointers, not a semantic artifact dump.
 - Focus on rules that prevent drift and bugs.
 - Include design/implementation/verification workflow.
 - If `docs/agent/SCOPES.md` exists, include scoped-doc discovery guidance: future agents should check `SCOPES.md`, use longest matching path scope first, then repo-level fallback.
@@ -400,7 +429,8 @@ Rules:
 - Keep root `AGENTS.md` short and operational.
 - Ensure `ARCHITECTURE.md` describes structure, not line-by-line code.
 - Ensure `INVARIANTS.md` contains rules, not implementation notes.
-- Ensure `RISK_REGISTER.md` contains actionable risks.
+- Ensure `RISK_REGISTER.md` contains actionable risks, not generic design concerns owned by `DESIGN_ISSUES.md`.
+- Ensure `CHANGE_GUIDE.md` routes readers to source-of-truth docs instead of duplicating them.
 - Ensure `VALIDATION_BASELINE.md` exists after repo-level Pass 1 has run and names commands/blockers rather than broad strategy.
 - Ensure `TESTING_STRATEGY.md` exists after repo-level Pass 10 has run and names observed test structure, gaps, and risk-to-test priorities.
 - Preserve uncertainty markers where evidence incomplete.

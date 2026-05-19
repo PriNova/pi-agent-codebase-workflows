@@ -22,6 +22,13 @@ If scoped docs match the task, read nearest scoped `README.md` only if present a
 
 When artifact headers exist, treat `planned` docs as intent and verify implementation-sensitive claims against source evidence.
 
+Context budget rules:
+- Do not read every canonical artifact by default.
+- Read owner artifact for the changed semantic category, plus router docs needed to find it.
+- Prefer scoped docs for local detail and top-level docs for repo-wide fallback.
+- If a needed owner artifact is absent, infer from source evidence and note missing artifact in preflight.
+- Do not duplicate findings across docs during update planning; update the owner artifact and link from router docs.
+
 Before editing code, produce:
 1. Task classification: bug fix / feature / refactoring / risk-fix / test-only / docs-only
 2. Relevant docs read
