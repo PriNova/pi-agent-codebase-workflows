@@ -72,7 +72,7 @@ If `docs/agent/SCOPES.md` is present:
   - `docs/agent/SCOPES.md` when present
   - matched scoped `README.md` if present, and relevant scoped docs when present
   - matching scoped `REPO_INVENTORY.md` or top-level `docs/agent/REPO_INVENTORY.md` when entry points, commands, or external boundaries matter
-  - matching scoped `VALIDATION_BASELINE.md` or top-level `docs/agent/VALIDATION_BASELINE.md` when build/test/tooling/validation behavior changes
+  - matching scoped `VALIDATION_BASELINE.md` or top-level `docs/agent/VALIDATION_BASELINE.md` when build/test/tooling/validation behavior changes; if absent, infer validation expectations from package/build files and note missing baseline only when relevant
   - `docs/agent/PROJECT_INTENT.md` for scope, non-goals, users, journeys, or product-sensitive changes
   - `docs/agent/ARCHITECTURE.md`
   - `docs/agent/DATA_FLOW.md` for user journeys, pipelines, transformations, side effects, and error states
@@ -81,7 +81,7 @@ If `docs/agent/SCOPES.md` is present:
   - `docs/agent/DEPENDENCY_RULES.md`
   - `docs/agent/RISK_REGISTER.md`
   - `docs/agent/DESIGN_ISSUES.md` for known drift, deferred decisions, or refactor risks
-  - `docs/agent/TESTING_STRATEGY.md` for test coverage expectations and validation shape
+  - `docs/agent/TESTING_STRATEGY.md` for test coverage expectations and validation shape; if absent, infer from existing tests and mention missing strategy only when it materially affects review confidence
   - scoped `CONTRACTS.md` files for touched cross-scope APIs, shared types, schemas, events, generated clients, or persistence boundaries
 - Prioritize correctness, architecture drift, data consistency, side-effect boundaries, public contracts, and tests.
 - Ignore style unless it affects maintainability or correctness.

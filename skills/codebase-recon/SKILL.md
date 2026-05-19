@@ -42,8 +42,8 @@ docs/
     DESIGN_ISSUES.md
     RISK_REGISTER.md
     CHANGE_GUIDE.md
-    TESTING_STRATEGY.md        # preserve/update when present; create only when useful
-    VALIDATION_BASELINE.md     # preserve/update when present; create only when useful
+    TESTING_STRATEGY.md        # required baseline artifact; may state unknowns/gaps
+    VALIDATION_BASELINE.md     # required baseline artifact; may state blockers/not run
     adr/
       0001-observed-architecture.md
 ```
@@ -75,6 +75,8 @@ docs/
     DESIGN_ISSUES.md
     RISK_REGISTER.md
     CHANGE_GUIDE.md
+    TESTING_STRATEGY.md
+    VALIDATION_BASELINE.md
     adr/
       0001-observed-architecture.md
 ```
@@ -97,8 +99,8 @@ docs/
         DESIGN_ISSUES.md
         RISK_REGISTER.md
         CHANGE_GUIDE.md
-        TESTING_STRATEGY.md    # preserve/update when present; create only when useful
-        VALIDATION_BASELINE.md # preserve/update when present; create only when useful
+        TESTING_STRATEGY.md    # required when Pass 10 runs for this scope
+        VALIDATION_BASELINE.md # required when Pass 1 runs for this scope
         CONTRACTS.md
       by-domain/<domain-slug>/
         README.md              # optional local index for large/complex scopes
@@ -111,8 +113,8 @@ docs/
         DESIGN_ISSUES.md
         RISK_REGISTER.md
         CHANGE_GUIDE.md
-        TESTING_STRATEGY.md    # preserve/update when present; create only when useful
-        VALIDATION_BASELINE.md # preserve/update when present; create only when useful
+        TESTING_STRATEGY.md    # required when Pass 10 runs for this scope
+        VALIDATION_BASELINE.md # required when Pass 1 runs for this scope
         CONTRACTS.md
 ```
 
@@ -217,14 +219,15 @@ Switch from all-in-one to numbered-pass mode when:
 
 ## Pass 1 — Repository Inventory
 
-Task: write/update `docs/agent/REPO_INVENTORY.md`, or scoped `REPO_INVENTORY.md` when focus is provided.
+Task: write/update `docs/agent/REPO_INVENTORY.md` and `docs/agent/VALIDATION_BASELINE.md`, or scoped `REPO_INVENTORY.md` / `VALIDATION_BASELINE.md` when focus is provided.
 
 Rules:
 - No source edits.
 - No architecture judgments yet.
 - Inspect build/config/package files, directory tree, entry points, tests, validation commands, external boundaries.
+- Create `VALIDATION_BASELINE.md` even if commands cannot be run; record exact unknowns, blockers, and next best checks.
 
-Output sections:
+`REPO_INVENTORY.md` output sections:
 - Project summary
 - Build/test commands
 - Entry points
@@ -232,6 +235,15 @@ Output sections:
 - External dependencies/boundaries
 - Unknowns
 - Next recommended analysis targets
+
+`VALIDATION_BASELINE.md` output sections:
+- Install/bootstrap command(s)
+- Format/lint command(s)
+- Typecheck/build command(s)
+- Test command(s)
+- Runtime/smoke command(s)
+- Last run status: run / not run / blocked
+- Blockers and next best checks
 
 ## Pass 2 — Architecture Reconstruction
 
@@ -389,7 +401,8 @@ Rules:
 - Ensure `ARCHITECTURE.md` describes structure, not line-by-line code.
 - Ensure `INVARIANTS.md` contains rules, not implementation notes.
 - Ensure `RISK_REGISTER.md` contains actionable risks.
-- Ensure `VALIDATION_BASELINE.md`, when present, names commands and blockers rather than broad strategy.
+- Ensure `VALIDATION_BASELINE.md` exists after repo-level Pass 1 has run and names commands/blockers rather than broad strategy.
+- Ensure `TESTING_STRATEGY.md` exists after repo-level Pass 10 has run and names observed test structure, gaps, and risk-to-test priorities.
 - Preserve uncertainty markers where evidence incomplete.
 - Add `Known Unknowns` where useful.
 
@@ -411,9 +424,11 @@ Structure:
 
 ## Pass 10 — Risk-to-Tests Plan
 
-Read first: `docs/agent/RISK_REGISTER.md`, `docs/agent/INVARIANTS.md`, `docs/agent/DATA_MODEL.md`, `docs/agent/CHANGE_GUIDE.md`; when present, also read `docs/agent/TESTING_STRATEGY.md` and `docs/agent/VALIDATION_BASELINE.md` for test type and command guidance.
+Read first: `docs/agent/RISK_REGISTER.md`, `docs/agent/INVARIANTS.md`, `docs/agent/DATA_MODEL.md`, `docs/agent/CHANGE_GUIDE.md`, `docs/agent/TESTING_STRATEGY.md`, and `docs/agent/VALIDATION_BASELINE.md`.
 
-Task: select top 3–5 risks to convert into tests first.
+Task: write/update `docs/agent/TESTING_STRATEGY.md`, or scoped `TESTING_STRATEGY.md` when focus is provided, and select top 3–5 risks to convert into tests first.
+
+Create `TESTING_STRATEGY.md` even if test coverage is sparse or unknown; record observed test types, gaps, risk-based priorities, and recommended next tests.
 
 Selection criteria:
 - high severity
@@ -430,5 +445,13 @@ For each selected risk:
 - Exact scenario
 - Expected behavior
 - Minimal implementation plan
+
+`TESTING_STRATEGY.md` output sections:
+- Observed test structure
+- Existing test types and commands
+- Coverage gaps around invariants and risks
+- Recommended test strategy
+- Risk-to-test priorities
+- Known blockers
 
 Do not write production code in this pass.
