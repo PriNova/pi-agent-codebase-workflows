@@ -1,7 +1,7 @@
 {
   "name": "pi-agent-codebase-workflows",
-  "version": "0.3.2",
-  "description": "Pi skills and prompt templates for safe greenfield starts, codebase reconstruction, architecture-aware review, and safe changes.",
+  "version": "0.5.0",
+  "description": "Pi skills and prompt templates for structured YAML artifact workflows: safe-start, codebase-recon, safe-change, architecture review, and legacy docs migration.",
   "license": "MIT",
   "author": "PriNova",
   "type": "module",
@@ -27,7 +27,6 @@
   "files": [
     "skills/",
     "prompts/",
-    "docs/",
     "README.md",
     "CHANGELOG.md",
     "LICENSE"

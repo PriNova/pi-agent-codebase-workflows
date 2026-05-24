@@ -1,20 +1,35 @@
 # pi-agent-codebase-workflows
 
-Pi package with skills and prompt templates for safe greenfield starts, documented-codebase changes, reconstruction, and reviews.
+Pi package with agent-first skills and prompt templates for structured codebase understanding, safe greenfield starts, safe changes, architecture-aware review, and migration from deprecated prose docs.
 
-Credits: built for [pi](https://github.com/earendil-works/pi-mono), created by Mario Zechner ([GitHub: @badlogic](https://github.com/badlogic), [X: @badlogicgames](https://x.com/badlogicgames)) and the Earendil Works team ([@earendil-works](https://github.com/earendil-works)).
+## Structured artifact model
+
+Legacy prose-style project-agent docs are deprecated. Current workflows treat `docs/agent/api` as a logical layout under a resolved structured docs root:
+
+```text
+<docs-root>/repo/*.yaml
+<docs-root>/scopes/by-path/<repo-relative-path>/*.yaml
+<docs-root>/scopes/by-domain/<slug>/*.yaml
+```
+
+Resolution rules:
+- resolve `workspace_root` with `git rev-parse --show-toplevel 2>/dev/null` or fallback to `pwd`
+- `safe-start` creates and uses the initial repo-local root at `<workspace_root>/docs/agent/api`
+- other skills use repo-local only when that root already exists
+- otherwise use the global overlay root `~/.pi/agent/workspaces/<workspace-fingerprint>/docs/agent/api`
+- derive `<workspace-fingerprint>` deterministically from the canonical `workspace_root` path and keep it stable for the same workspace
+
+No workflow generates `docs/agent/*.md`, scoped Markdown docs, or README files as project-agent artifacts. Structured YAML is the API for further transformation and agent ingestion. Root `AGENTS.md` remains a compact harness interoperability file generated from `agent-operating-guide.yaml`, because not every coding harness consumes these skills/prompts directly.
+
+All skills follow a Structured Artifact Write/Update Protocol: resolve scope and owner artifact first, read before write, preserve stable IDs, upsert by ID/source-of-truth fields, mark unsupported records stale/deprecated instead of deleting, require evidence, validate references, format YAML deterministically, and report validation.
 
 ## Included skills
 
-- `safe-start` — create new projects safely with data-first design, project-agent docs, minimal scaffold, validation baseline, and first thin vertical slice.
-- `codebase-recon` — reconstruct durable project understanding into `docs/agent/*.md` plus project-root `AGENTS.md`.
-- `arch-code-review` — review current diffs against documented architecture, invariants, data model, dependency rules, risks, and tests.
-- `safe-change` — preflight, design/diagnosis, implementation, validation, and semantic docs update workflow for safe code changes.
-
-## Usage docs
-
-- [Tutorial](docs/TUTORIAL.md) — end-to-end workflows for small repos, monorepos, scoped reconstruction, safe changes, reviews, consolidation, and legacy docs.
-- [Troubleshooting](docs/TROUBLESHOOTING.md) — common reconstruction, scoping, contract, review, and validation issues.
+- `safe-start` — create new projects with structured intent, data, architecture, contracts, validation, and handoff artifacts.
+- `codebase-recon` — reconstruct existing codebases into structured YAML artifacts under the resolved structured docs root.
+- `safe-change` — make documented-codebase changes using structured artifacts and update owner YAML only when durable semantics change.
+- `arch-code-review` — review diffs against structured architecture, data, invariant, dependency, risk, contract, and test artifacts from the resolved structured docs root.
+- `structured-docs-migration` — migrate deprecated prose-style docs into canonical structured YAML artifacts under the resolved structured docs root.
 
 ## Included prompt templates
 
@@ -26,13 +41,13 @@ Reconstruction:
 - `/recon-03-data-invariants`
 - `/recon-04-dependency-rules`
 - `/recon-05-risk-register`
-- `/recon-06-agents`
+- `/recon-06-agents` — writes `agent-operating-guide.yaml` and root `AGENTS.md`
 - `/recon-07-change-guide`
 - `/recon-08-consolidate`
 - `/recon-09-adr`
 - `/recon-10-risk-tests`
 
-Safe-start workflow:
+Safe start:
 
 - `/safe-start-all`
 - `/safe-start-01-intent`
@@ -44,7 +59,7 @@ Safe-start workflow:
 - `/safe-start-07-vertical-slice`
 - `/safe-start-08-handoff`
 
-Safe-change workflow:
+Safe change / review / migration:
 
 - `/preflight`
 - `/bug-diagnose`
@@ -55,6 +70,7 @@ Safe-change workflow:
 - `/refactor-implement`
 - `/risk-fix`
 - `/review-arch`
+- `/migrate-structured-docs`
 
 ## Install
 
@@ -78,69 +94,58 @@ pi install /absolute/path/to/pi-agent-codebase-workflows
 pi -e /absolute/path/to/pi-agent-codebase-workflows
 ```
 
-## Focus/scoping arguments
+## Scope/focus arguments
 
-Reconstruction prompts accept optional `[focus]` arguments. Use them to scope analysis to a module, package, app, service, directory, or bounded domain area, especially in monorepos.
-
-Example:
-
-```bash
-/recon-01-inventory packages/api
-/recon-02-architecture apps/mobile auth flow
-/recon-all services/billing
-```
-
-Without focus, reconstruction writes the traditional top-level `docs/agent/*.md` artifacts. With focus, reconstruction writes hierarchical scoped artifacts and updates `docs/agent/SCOPES.md`:
+Prompts accept optional focus/scope arguments. Path-like focus writes under:
 
 ```text
-docs/agent/
-  SCOPES.md
-  scopes/
-    by-path/packages/api/
-      README.md      # optional local index for large/complex scopes
-      ARCHITECTURE.md
-      CONTRACTS.md
-    by-domain/auth-flow/
-      README.md      # optional local index for large/complex scopes
-      ARCHITECTURE.md
-      CONTRACTS.md
+<docs-root>/scopes/by-path/<focus>/
 ```
 
-Top-level docs remain valid as repo-level summaries/fallbacks. This is backward-compatible with repositories reconstructed before scoped artifacts existed. Later `/recon-08-consolidate` can reconcile multiple scoped artifacts into repo-level guidance.
-
-Safe-change and review workflows read `SCOPES.md` when present, match path scopes by longest prefix, and follow scoped `CONTRACTS.md` links for cross-module APIs, shared types, schemas, events, generated clients, and persistence boundaries.
-
-Review and risk-fix prompts also accept scope/focus arguments for targeted reviews or fixes.
-
-## Artifact locations
-
-Skills write durable project-agent docs under:
+Domain-like focus writes under:
 
 ```text
-docs/agent/
-docs/agent/scopes/**
+<docs-root>/scopes/by-domain/<slug>/
 ```
 
-Project operating instructions stay at project root:
+`<docs-root>/repo/scopes.yaml` is the canonical scope registry. Path scopes match by longest prefix. Domain scopes require explicit task/domain/contract refs.
 
-```text
-AGENTS.md
-```
+## Artifact ownership
 
-The workflows intentionally avoid `docs/AGENTS.md` and `docs/agent/AGENTS.md`.
+- `scopes.yaml`: scope routing and ownership.
+- `repo-inventory.yaml`: structure, entry points, command index, boundaries.
+- `validation-baseline.yaml`: command status, blockers, validation order.
+- `project-intent.yaml`: goals, users, journeys, constraints.
+- `architecture.yaml`: components, style, side-effect boundaries.
+- `data-flow.yaml`: typed flow graph and error states.
+- `data-model.yaml`: entities, IDs, schemas, lifecycles, serialized formats.
+- `invariants.yaml`: rules, forbidden states, enforcement.
+- `dependency-rules.yaml`: layers, allowed/forbidden dependencies, violations.
+- `design-issues.yaml`: drift, deferred decisions, ownership gaps.
+- `risk-register.yaml`: failure modes and suggested tests/fixes.
+- `contracts.yaml`: APIs, schemas, events, generated clients, persistence/deployment/env contracts.
+- `testing-strategy.yaml`: test topology, gaps, risk-to-test priorities.
+- `change-guide.yaml`: workflow routing and checklists.
+- `adr.yaml`: structured ADR records.
+- `agent-operating-guide.yaml`: structured operational rules for agents; root `AGENTS.md` mirrors compact harness-facing guidance.
+
+## Runtime schemas and validation
+
+Runtime schema assets are shared under `skills/_shared/references/`. Skills load `../_shared/references/artifact-api.md`, `../_shared/references/schemas/common.schema.json`, and the matching artifact schema(s) for files they write. `_shared` has no `SKILL.md`, so Pi does not discover it as a skill.
+
+Project docs outside the shared runtime refs may exist in the source repo, but are not runtime instructions for installed extension users.
+
+Validation is best-effort by agent inspection and re-read.
 
 ## Package structure
 
 ```text
 skills/
-  safe-start/SKILL.md
-  codebase-recon/SKILL.md
-  arch-code-review/SKILL.md
-  safe-change/
-    SKILL.md
-    references/*.md
+  _shared/references/artifact-api.md
+  _shared/references/schemas/*.schema.json
+  */SKILL.md
 prompts/
   *.md
 ```
 
-Pi discovers these through the `pi.skills` and `pi.prompts` entries in `package.json`.
+Pi discovers skills and prompts through the `pi.skills` and `pi.prompts` entries in `package.json`.

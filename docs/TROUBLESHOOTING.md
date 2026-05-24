@@ -1,155 +1,93 @@
-# Troubleshooting
+# Troubleshooting Structured Agent Artifacts
 
-## No docs were created
+## No YAML artifacts were written
 
-Check that the prompt used a reconstruction command:
-
-```text
-/recon-01-inventory
-/recon-02-architecture
-/recon-all
-```
-
-Reconstruction must not edit production code, but it should write `docs/agent/*.md` or scoped docs under `docs/agent/scopes/**`.
-
-If the repo is large, prefer numbered passes over `/recon-all`.
-
-## Agent wrote scoped findings into top-level docs
-
-Expected behavior:
-- no focus argument -> top-level `docs/agent/*.md`
-- focus argument -> `docs/agent/scopes/by-path/<focus>/...` or `docs/agent/scopes/by-domain/<slug>/...`
-
-Fix:
-1. Move or summarize misplaced details into the correct scoped artifact.
-2. Update `docs/agent/SCOPES.md`.
-3. Run `/recon-08-consolidate` later if top-level summaries need reconciliation.
-
-## `SCOPES.md` missing or stale
-
-`docs/agent/SCOPES.md` is created when first scoped pass runs. It may not exist in purely unscoped or legacy repos.
-
-If scoped docs exist but `SCOPES.md` is missing:
-- create/update `docs/agent/SCOPES.md`
-- list each scope, docs path, status, ownership, and external contracts
-
-If stale:
-- mark outdated scopes as `stale` or `deprecated`
-- update evidence paths and status during next scoped pass or consolidation
-
-## Scope path was renamed
-
-Scoped path docs can become historical after source moves.
-
-Fix:
-1. Verify whether the source path still exists.
-2. If moved, update `SCOPES.md` with new path and status.
-3. Treat old scoped docs as historical until revalidated against source.
-4. Re-run relevant scoped pass for the new path.
-
-## Too many scoped directories
-
-Avoid creating a scope for every folder.
-
-Prefer scopes for:
-- packages
-- apps
-- services
-- bounded domains
-- major modules with separate ownership or contracts
-
-Consolidate or deprecate tiny scopes in `SCOPES.md` when they add noise.
-
-## Agent read too many files
-
-For large repos, provide explicit focus:
+Expected canonical root:
 
 ```text
-/recon-02-architecture packages/api
-/preflight fix token refresh in packages/api
-/review-arch packages/api
+<docs-root>/repo/
 ```
 
-Scoped workflows should inspect focused area plus immediate dependencies, tests, entry points, and external boundaries only.
+Resolve `<docs-root>` by using repo-local `<workspace_root>/docs/agent/api` only when it already exists, except `safe-start`, which creates that initial repo-local root. Otherwise use the global overlay root `~/.pi/agent/workspaces/<workspace-fingerprint>/docs/agent/api`.
 
-If investigation expands too broadly, stop and narrow target path/domain.
+If a prompt produced only chat output, check whether it was a design/approval step. Scaffold plans and diagnoses may stop before writing files.
 
-## Cross-scope contract ownership unclear
+## Markdown docs were created unexpectedly
 
-Use `CONTRACTS.md`.
+Legacy project-agent Markdown is deprecated. Workflows should not create `docs/agent/*.md` or scoped Markdown docs. The only Markdown exception is root `AGENTS.md`, used for harness interoperability and generated from `agent-operating-guide.yaml`.
 
-Rules:
-- one owner scope per contract
-- owner documents source of truth, compatibility rules, tests, and consumers
-- consumers link to owner contract and document local usage/risk only
+If other Markdown docs were created:
+1. Move durable facts into the correct owner YAML artifact.
+2. Replace duplicated facts with ID references.
+3. Remove or ignore the accidental Markdown artifact.
 
-If ownership cannot be determined, record it as:
-- known unknown
-- drift risk
-- follow-up item for consolidation
+## Scope went to the wrong place
 
-## Top-level and scoped docs disagree
-
-Do not silently delete disagreement evidence.
-
-Fix:
-1. Check source evidence.
-2. Prefer latest verified source-backed observation.
-3. Keep scope-specific facts in scoped docs.
-4. Summarize stable repo-level guidance in top-level docs.
-5. Run `/recon-08-consolidate` to reconcile contradictions.
-
-## Existing legacy docs already exist
-
-Legacy top-level docs remain valid.
-
-Safe-change and review use top-level docs when `SCOPES.md` is absent. First focused recon pass adds scoped docs and `SCOPES.md` without deleting old docs.
-
-Use consolidation when enough scoped material exists to update repo-level summaries.
-
-## Monorepo too large for `/recon-all`
-
-Use numbered/scoped passes instead:
+Path-like focus writes to:
 
 ```text
-/recon-01-inventory
-/recon-02-architecture packages/api
-/recon-03-data-invariants packages/api
-/recon-02-architecture apps/mobile
+<docs-root>/scopes/by-path/<focus>/
 ```
 
-Keep each pass bounded. Let `/recon-08-consolidate` reconcile later.
-
-## Safe-change ignored scoped docs
-
-Check:
-- `docs/agent/SCOPES.md` exists
-- target path is listed or covered by longest-prefix scope
-- scoped source path still exists
-- task wording includes relevant path/domain
-
-Fix by providing explicit target:
+Domain-like focus writes to:
 
 ```text
-/preflight fix billing total rounding in services/billing
+<docs-root>/scopes/by-domain/<slug>/
 ```
 
-## Review missed a cross-module contract
+Check `<docs-root>/repo/scopes.yaml`:
+- path scopes should use longest-prefix matching
+- domain scopes should have explicit domain/task/contract evidence
+- cross-scope ownership should identify owner and consumer contracts
 
-Check whether touched API/type/schema/event is documented in scoped `CONTRACTS.md`.
+## Duplicate facts appear across artifacts
 
-If not:
-1. Identify owner scope.
-2. Add or update owner `CONTRACTS.md`.
-3. Link consumer scope to owner contract.
-4. Re-run `/review-arch` with explicit scope if needed.
+Use owner mapping:
 
-## Validation command unavailable
+- scope routing -> `scopes.yaml`
+- command status -> `validation-baseline.yaml`
+- entities/schemas -> `data-model.yaml`
+- rules -> `invariants.yaml`
+- import boundaries -> `dependency-rules.yaml`
+- failure modes -> `risk-register.yaml`
+- APIs/events/schemas between scopes -> `contracts.yaml`
+- test gaps/priorities -> `testing-strategy.yaml`
 
-Use best available focused validation:
-- targeted test for changed package/module
-- type check for affected package
-- lint for affected package
-- build/smoke test for affected app/service
+Non-owner artifacts should reference stable IDs, not repeat definitions.
 
-If no validation can run, report why and name the next best command for the user to run.
+## IDs changed unexpectedly
+
+Stable IDs should not be regenerated because order, names, or paths changed. Fix by restoring the old ID and updating source-of-truth fields/evidence. New IDs should use deterministic slugs and collision discriminators, not random suffixes.
+
+## Dangling references
+
+If a `*_ref` points nowhere:
+1. Add the missing owner record as a compact stub, or
+2. Mark the ref external/unknown, or
+3. Create a `design-issues.yaml` ownership-gap issue.
+
+## Existing legacy docs need migration
+
+Run:
+
+```text
+/migrate-structured-docs
+```
+
+Migration reads legacy prose as input, writes YAML under the resolved structured docs root, collapses duplicate facts into owner artifacts, and may regenerate root `AGENTS.md` from `agent-operating-guide.yaml`.
+
+## Validation command fails on legacy docs
+
+Root `AGENTS.md` is allowed. Other `docs/agent/*.md` files indicate incomplete migration or accidental fallback output. Migrate or remove them after confirming facts exist in YAML.
+
+## Artifact status confusion
+
+Use these transitions:
+
+```text
+planned -> partial -> current
+current -> stale -> current
+current|stale|partial -> deprecated
+```
+
+`current` needs observed evidence. `partial` means useful but incomplete. `stale` means contradicted or missing source path. `deprecated` means superseded and should include `replacement_ref` when known.

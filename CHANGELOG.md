@@ -12,6 +12,40 @@ All notable changes to this project are documented here.
 
 - None.
 
+## [0.5.0] - 2026-05-24
+
+### Changed
+
+- Switched workflow docs and prompts to treat `docs/agent/api` as a logical layout under a resolved docs root, with `safe-start` creating the initial repo-local root and other workflows defaulting to a global overlay when repo-local docs are absent.
+- Removed package-published validator/runtime scripts and deleted bundled examples so the package ships only runtime skill/prompt assets and top-level docs.
+- Simplified validation guidance to best-effort agent inspection and re-read instead of packaged validator commands.
+
+### Fixes
+
+- Clarified prompts, skills, README, tutorial, and troubleshooting so third-party repos are not implicitly treated as adopters of repo-local structured docs.
+
+## [0.4.0] - 2026-05-20
+
+### Added
+
+- Added canonical structured artifact runtime references and per-artifact JSON schemas under `skills/_shared/references/`.
+- Added `structured-docs-migration` skill and `/migrate-structured-docs` prompt for legacy prose-to-YAML migration.
+- Added structured artifact validation scripts and validator tests.
+- Added migration and structured artifact examples for risk-register conversion.
+
+### Changed
+
+- Shifted workflows to canonical YAML artifacts under `docs/agent/api/**` as the source of truth.
+- Deprecated legacy project-agent prose Markdown artifacts under `docs/agent/*.md` and scoped prose docs.
+- Kept root `AGENTS.md` as allowed harness interoperability Markdown output when explicitly produced.
+- Updated prompts, skills, README, tutorial, and troubleshooting to structured artifact model.
+
+### Fixes
+
+- Fixed validator dangling-reference checks to include `ev:*` evidence references.
+- Fixed read-only review prompt wording to remove write/update protocol mismatch.
+- Clarified migration prompt wording: no Markdown fallback artifacts, while allowing root `AGENTS.md` when explicitly produced.
+
 ## [0.3.2] - 2026-05-19
 
 ### Added

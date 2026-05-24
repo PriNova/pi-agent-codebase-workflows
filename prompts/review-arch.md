@@ -1,12 +1,5 @@
 ---
-description: Review current diff against architecture and invariants
+description: "Structured architecture review"
 argument-hint: "[scope]"
 ---
-Use `/skill:arch-code-review`.
-
-Review target/scope, if provided:
-$ARGUMENTS
-
-Use scope to focus review on a module/package/app/service/path when diff spans multiple areas. Use `docs/agent/SCOPES.md` if present to discover matching scoped docs and cross-scope contracts.
-
-Review current diff. Do not edit code. Provide verdict, findings with severity/evidence/fix direction, missing tests, docs updates, drift risk, final recommendation.
+Load `/skill:arch-code-review`, then read only task-relevant canonical YAML artifacts under the resolved structured docs root (resolve scope via `<docs-root>/repo/scopes.yaml` when present). Review current diff for architecture/data/invariant/dependency/contract/risk/test alignment. Scope: $ARGUMENTS. Read-only: do not edit code or artifacts.
