@@ -12,6 +12,12 @@ All notable changes to this project are documented here.
 
 - None.
 
+## [0.5.1] - 2026-05-25
+
+### Fixes
+
+- Defined exact overlay-path `<workspace-fingerprint>` resolution across all skills, shared runtime refs, prompt templates, README, tutorial, and troubleshooting docs: canonicalize `workspace_root`, strip one leading slash/backslash, replace every slash/backslash/colon with `-`, wrap with `--`. Concrete example included.
+
 ## [0.5.0] - 2026-05-24
 
 ### Changed

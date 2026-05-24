@@ -16,6 +16,17 @@ Examples:
 
 Do not read all schemas. Do not use templates.
 
+## Resolved structured docs root
+
+When a skill or prompt says "resolved structured docs root", resolve it exactly:
+
+1. Resolve `workspace_root` with `git rev-parse --show-toplevel 2>/dev/null` or fallback to `pwd`.
+2. Canonicalize `workspace_root` before fingerprinting when possible (`realpath`, `pwd -P`, `Path(...).resolve()`, or equivalent).
+3. Use repo-local `<workspace_root>/docs/agent/api` only when the selected skill says repo-local applies and that directory exists.
+4. Otherwise compute `<workspace-fingerprint>` from canonical `workspace_root` by stripping one leading slash/backslash, replacing every slash, backslash, and colon with `-`, then wrapping with `--`.
+5. Use overlay root `~/.pi/agent/workspaces/<workspace-fingerprint>/docs/agent/api`.
+6. Example: `/data/data/com.termux/files/home/CodeProjects/pi-mono` -> `--data-data-com.termux-files-home-CodeProjects-pi-mono--` -> `~/.pi/agent/workspaces/--data-data-com.termux-files-home-CodeProjects-pi-mono--/docs/agent/api`.
+
 ## Artifact to schema mapping
 
 - `scopes.yaml` -> `scopes.schema.json`

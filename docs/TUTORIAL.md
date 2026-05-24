@@ -12,9 +12,12 @@ Canonical output lives under a resolved structured docs root:
 
 Resolution rules:
 - resolve `workspace_root` with `git rev-parse --show-toplevel 2>/dev/null` or fallback to `pwd`
+- canonicalize `workspace_root` before fingerprinting when possible (`realpath`, `pwd -P`, `Path(...).resolve()`, or equivalent)
 - `safe-start` creates and uses the initial repo-local root at `<workspace_root>/docs/agent/api`
 - other skills use repo-local only when that root already exists
 - otherwise use the global overlay root `~/.pi/agent/workspaces/<workspace-fingerprint>/docs/agent/api`
+- compute `<workspace-fingerprint>` exactly from canonical `workspace_root`: strip one leading slash/backslash, replace every slash, backslash, and colon with `-`, then wrap with `--`
+- example: `/data/data/com.termux/files/home/CodeProjects/pi-mono` -> `--data-data-com.termux-files-home-CodeProjects-pi-mono--`
 
 Root `AGENTS.md` is the only Markdown exception. It is kept for coding-harness interoperability and should mirror compact guidance from `<docs-root>/repo/agent-operating-guide.yaml`.
 

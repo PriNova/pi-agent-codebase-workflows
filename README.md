@@ -14,10 +14,12 @@ Legacy prose-style project-agent docs are deprecated. Current workflows treat `d
 
 Resolution rules:
 - resolve `workspace_root` with `git rev-parse --show-toplevel 2>/dev/null` or fallback to `pwd`
+- canonicalize `workspace_root` before fingerprinting when possible (`realpath`, `pwd -P`, `Path(...).resolve()`, or equivalent)
 - `safe-start` creates and uses the initial repo-local root at `<workspace_root>/docs/agent/api`
 - other skills use repo-local only when that root already exists
 - otherwise use the global overlay root `~/.pi/agent/workspaces/<workspace-fingerprint>/docs/agent/api`
-- derive `<workspace-fingerprint>` deterministically from the canonical `workspace_root` path and keep it stable for the same workspace
+- compute `<workspace-fingerprint>` exactly from canonical `workspace_root`: strip one leading slash/backslash, replace every slash, backslash, and colon with `-`, then wrap with `--`
+- example: `/data/data/com.termux/files/home/CodeProjects/pi-mono` -> `--data-data-com.termux-files-home-CodeProjects-pi-mono--`
 
 No workflow generates `docs/agent/*.md`, scoped Markdown docs, or README files as project-agent artifacts. Structured YAML is the API for further transformation and agent ingestion. Root `AGENTS.md` remains a compact harness interoperability file generated from `agent-operating-guide.yaml`, because not every coding harness consumes these skills/prompts directly.
 

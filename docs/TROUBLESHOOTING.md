@@ -8,7 +8,7 @@ Expected canonical root:
 <docs-root>/repo/
 ```
 
-Resolve `<docs-root>` by using repo-local `<workspace_root>/docs/agent/api` only when it already exists, except `safe-start`, which creates that initial repo-local root. Otherwise use the global overlay root `~/.pi/agent/workspaces/<workspace-fingerprint>/docs/agent/api`.
+Resolve `<docs-root>` by using repo-local `<workspace_root>/docs/agent/api` only when it already exists, except `safe-start`, which creates that initial repo-local root. Otherwise canonicalize `workspace_root`, strip one leading slash/backslash, replace every slash, backslash, and colon with `-`, wrap with `--`, and use the global overlay root `~/.pi/agent/workspaces/<workspace-fingerprint>/docs/agent/api`. Example: `/data/data/com.termux/files/home/CodeProjects/pi-mono` -> `--data-data-com.termux-files-home-CodeProjects-pi-mono--`.
 
 If a prompt produced only chat output, check whether it was a design/approval step. Scaffold plans and diagnoses may stop before writing files.
 

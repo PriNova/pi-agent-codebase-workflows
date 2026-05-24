@@ -18,11 +18,13 @@ Treat `docs/agent/api` as a logical layout rooted at a resolved structured docs 
 
 Resolution rules:
 1. Resolve `workspace_root` with `git rev-parse --show-toplevel 2>/dev/null` or fallback to `pwd`.
-2. `safe-start` always creates and uses the initial repo-local root: `<workspace_root>/docs/agent/api`.
-3. `structured-docs-migration` uses repo-local only when `<workspace_root>/docs/agent/api` already exists.
-4. Otherwise use the global overlay root: `~/.pi/agent/workspaces/<workspace-fingerprint>/docs/agent/api`.
-5. Derive `<workspace-fingerprint>` deterministically from the canonical `workspace_root` path and keep it stable for the same workspace.
-6. Do not create new repo-local structured docs in unadopted repos unless the user explicitly asks for repo-local adoption there.
+2. Canonicalize `workspace_root` before fingerprinting when possible (`realpath`, `pwd -P`, `Path(...).resolve()`, or equivalent).
+3. `safe-start` always creates and uses the initial repo-local root: `<workspace_root>/docs/agent/api`.
+4. `structured-docs-migration` uses repo-local only when `<workspace_root>/docs/agent/api` already exists.
+5. Otherwise use the global overlay root: `~/.pi/agent/workspaces/<workspace-fingerprint>/docs/agent/api`.
+6. Compute `<workspace-fingerprint>` exactly from canonical `workspace_root`: strip one leading slash/backslash, replace every slash, backslash, and colon with `-`, then wrap with `--`. This keeps the same workspace stable.
+7. Example: `/data/data/com.termux/files/home/CodeProjects/pi-mono` -> `--data-data-com.termux-files-home-CodeProjects-pi-mono--`.
+8. Do not create new repo-local structured docs in unadopted repos unless the user explicitly asks for repo-local adoption there.
 
 Logical structured layout under the resolved docs root:
 
