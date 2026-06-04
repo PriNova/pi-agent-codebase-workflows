@@ -1,7 +1,7 @@
 {
   "name": "pi-agent-codebase-workflows",
   "version": "0.5.1",
-  "description": "Pi skills and prompt templates for structured YAML artifact workflows: safe-start, codebase-recon, safe-change, architecture review, and legacy docs migration.",
+  "description": "Pi skills and prompt templates for structured YAML artifact workflows: safe-start, codebase-recon, safe-change, architecture review, structured-doc validation, and legacy docs migration.",
   "license": "MIT",
   "author": "PriNova",
   "type": "module",
@@ -14,7 +14,9 @@
     "greenfield",
     "code-review",
     "architecture",
-    "safe-change"
+    "safe-change",
+    "validation",
+    "structured-docs"
   ],
   "homepage": "https://github.com/PriNova/pi-agent-codebase-workflows#readme",
   "repository": {

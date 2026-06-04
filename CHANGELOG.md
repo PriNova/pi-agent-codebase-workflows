@@ -6,7 +6,7 @@ All notable changes to this project are documented here.
 
 ### Added
 
-- None.
+- Added `structured-doc-validate` skill and `/validate-structured-docs` prompt for read-only four-layer structured YAML validation: schema shape, reference integrity, evidence quality, coverage, and granularity.
 
 ### Fixes
 

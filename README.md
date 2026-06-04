@@ -1,6 +1,6 @@
 # pi-agent-codebase-workflows
 
-Pi package with agent-first skills and prompt templates for structured codebase understanding, safe greenfield starts, safe changes, architecture-aware review, and migration from deprecated prose docs.
+Pi package with agent-first skills and prompt templates for structured codebase understanding, safe greenfield starts, safe changes, architecture-aware review, structured-doc validation, and migration from deprecated prose docs.
 
 ## Structured artifact model
 
@@ -31,6 +31,7 @@ All skills follow a Structured Artifact Write/Update Protocol: resolve scope and
 - `codebase-recon` — reconstruct existing codebases into structured YAML artifacts under the resolved structured docs root.
 - `safe-change` — make documented-codebase changes using structured artifacts and update owner YAML only when durable semantics change.
 - `arch-code-review` — review diffs against structured architecture, data, invariant, dependency, risk, contract, and test artifacts from the resolved structured docs root.
+- `structured-doc-validate` — validate structured YAML docs for schema shape, reference integrity, evidence quality, coverage, and granularity.
 - `structured-docs-migration` — migrate deprecated prose-style docs into canonical structured YAML artifacts under the resolved structured docs root.
 
 ## Included prompt templates
@@ -61,7 +62,7 @@ Safe start:
 - `/safe-start-07-vertical-slice`
 - `/safe-start-08-handoff`
 
-Safe change / review / migration:
+Safe change / review / validation / migration:
 
 - `/preflight`
 - `/bug-diagnose`
@@ -72,6 +73,7 @@ Safe change / review / migration:
 - `/refactor-implement`
 - `/risk-fix`
 - `/review-arch`
+- `/validate-structured-docs`
 - `/migrate-structured-docs`
 
 ## Install
@@ -137,7 +139,7 @@ Runtime schema assets are shared under `skills/_shared/references/`. Skills load
 
 Project docs outside the shared runtime refs may exist in the source repo, but are not runtime instructions for installed extension users.
 
-Validation is best-effort by agent inspection and re-read.
+Validation is best-effort by agent inspection and re-read. The `structured-doc-validate` skill gives a read-only four-layer audit workflow for schema validity, references, evidence, coverage, and granularity.
 
 ## Package structure
 
