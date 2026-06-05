@@ -46,6 +46,12 @@ When a skill or prompt says "resolved structured docs root", resolve it exactly:
 - `adr.yaml` -> `adr.schema.json`
 - `agent-operating-guide.yaml` -> `agent-operating-guide.schema.json`
 
+## Envelope artifact IDs
+
+- Repo-level artifact IDs use `repo:<artifact-slug>`, e.g. `repo:architecture`.
+- Scoped artifact IDs append the artifact slug to the scope ID with `/`, e.g. `scope:packages/ai/architecture`.
+- Never append an artifact slug to a scope ID with a second colon. `scope:packages/ai:architecture` is invalid because stable IDs allow only the prefix colon.
+
 ## Runtime rule
 
 Schemas are contracts. Skills/prompts describe behavior. Project docs outside these shared runtime refs are maintainer aids and are not runtime instructions unless user explicitly asks about this package itself.

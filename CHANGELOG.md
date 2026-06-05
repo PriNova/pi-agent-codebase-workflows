@@ -10,7 +10,7 @@ All notable changes to this project are documented here.
 
 ### Fixes
 
-- None.
+- Clarified envelope `artifact_id` generation across write-capable structured-doc workflows so scoped artifact IDs use `<scope.id>/<artifact-slug>` instead of invalid second-colon form.
 
 ## [0.5.1] - 2026-05-25
 
