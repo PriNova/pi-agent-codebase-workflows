@@ -6,7 +6,14 @@ All notable changes to this project are documented here.
 
 ### Added
 
-- Added `structured-doc-validate` skill and `/validate-structured-docs` prompt for read-only four-layer structured YAML validation: schema shape, reference integrity, evidence quality, coverage, and granularity.
+- Added stronger safe-start schema coverage for `project-intent`, `architecture`, `data-flow`, `data-model`, `risk-register`, `testing-strategy`, `contracts`, and `adr` artifacts so end-users and validators can catch missing greenfield architecture fields.
+- Added pass-specific safe-start prompt guidance for prioritized quality attributes, trust boundaries, sensitive data, architecture tradeoffs, reliability, observability, security assumptions, quality-attribute verification, and thin-slice validation.
+- Added validation guidance that missing shared schema coverage or missing now-required fields in legacy artifacts should fail `/validate-structured-docs` audits.
+
+### Changed
+
+- Upgraded `safe-start` workflow semantics so greenfield passes explicitly capture prioritized quality attributes, operating constraints, success metrics, trust boundaries, sensitive data handling, architecture alternatives/tradeoffs, reliability expectations, observability expectations, and security assumptions before scaffolding.
+- Clarified README/tutorial/runtime docs that shared schemas are user-facing contracts and that validation should treat older artifacts missing newly required fields as invalid until repaired or migrated.
 
 ### Fixes
 

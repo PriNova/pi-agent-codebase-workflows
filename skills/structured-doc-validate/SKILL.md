@@ -78,7 +78,8 @@ Supported tasks:
 - If a focus is provided, read `<docs-root>/repo/scopes.yaml` first when present and select matching scope artifacts by longest path prefix or explicit domain match.
 - If no focus is provided, validate repo-level artifacts first, then scoped artifacts as context budget allows.
 - Prefer exact, evidence-backed findings over broad opinions.
-- Broken schemas, parse failures, and dangling refs are errors. Fuzzy evidence, coverage, and granularity concerns are warnings unless they block safe use.
+- Broken schemas, missing shared schema coverage for canonical artifact files, parse failures, and dangling refs are errors. Fuzzy evidence, coverage, and granularity concerns are warnings unless they block safe use.
+- If structured artifacts predate newer schema requirements, missing now-required fields are schema errors, not compatibility notes.
 - Every finding must include artifact path, record ID when available, severity, evidence, impact, and recommended next step.
 - If a validation command exists in `validation-baseline.yaml`, prefer running or recommending that command; otherwise validate by inspection and targeted shell checks.
 
@@ -88,9 +89,10 @@ Supported tasks:
 
 Check:
 - YAML parses cleanly.
+- Every canonical artifact file being validated has matching shared schema coverage.
 - Common envelope fields exist and are consistently shaped.
 - Artifact-specific top-level keys match the matching schema.
-- Required arrays/items are present.
+- Required arrays/items are present, including newer required fields introduced by schema evolution.
 - Stable IDs use expected prefixes for artifact family.
 - Status, severity, confidence, and other constrained values match schemas.
 - Required refs/evidence fields are present where schemas or workflow rules require them.
@@ -178,7 +180,7 @@ recommended_next_step: <specific repair or follow-up>
 
 ## Verdict Rules
 
-- `fail`: parse/schema errors, dangling required refs, missing required owner artifacts for selected scope, or missing evidence that makes current/high-confidence records unsafe.
+- `fail`: parse/schema errors, missing shared schema coverage for canonical artifacts, missing now-required fields, dangling required refs, missing required owner artifacts for selected scope, or missing evidence that makes current/high-confidence records unsafe.
 - `pass_with_warnings`: schema/required refs are usable, but evidence, coverage, or granularity issues need follow-up.
 - `pass`: no material issues found within inspected scope.
 - `blocked`: docs root, required files, repo root, schemas, or commands cannot be accessed enough to validate.

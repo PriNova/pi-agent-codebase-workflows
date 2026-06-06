@@ -23,7 +23,7 @@ Root `AGENTS.md` is the only Markdown exception. It is kept for coding-harness i
 
 ## Greenfield project
 
-Start with intent:
+Start with intent. Pass 1 should explicitly capture product goal, prioritized quality attributes/nonfunctional requirements, operating constraints, success metrics, and risk areas before architecture or scaffolding:
 
 ```text
 /safe-start-01-intent build a CLI that summarizes logs
@@ -55,6 +55,8 @@ Expected structured artifacts include:
 <docs-root>/repo/testing-strategy.yaml
 <docs-root>/repo/validation-baseline.yaml
 <docs-root>/repo/change-guide.yaml
+<docs-root>/repo/contracts.yaml
+<docs-root>/repo/adr.yaml
 <docs-root>/repo/agent-operating-guide.yaml
 AGENTS.md
 ```
@@ -148,4 +150,4 @@ Migration reads legacy Markdown as input only and writes canonical YAML under th
 
 ## Validation
 
-Validation is best-effort by agent inspection and re-read.
+Validation is best-effort by agent inspection and re-read. Run `/validate-structured-docs` when you want a read-only audit of schema shape, shared schema coverage, references, evidence, coverage, and granularity. Older structured artifacts that predate newer schemas should fail validation when now-required fields are missing.

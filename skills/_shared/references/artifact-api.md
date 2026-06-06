@@ -55,3 +55,7 @@ When a skill or prompt says "resolved structured docs root", resolve it exactly:
 ## Runtime rule
 
 Schemas are contracts. Skills/prompts describe behavior. Project docs outside these shared runtime refs are maintainer aids and are not runtime instructions unless user explicitly asks about this package itself.
+
+## Schema evolution note
+
+Shared schemas are user-facing contracts too. When new required fields are introduced, older artifacts that omit them are invalid until repaired or migrated. Validation should report missing schema coverage or missing now-required fields as schema failures, not as compatibility footnotes.

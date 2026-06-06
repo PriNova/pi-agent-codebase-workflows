@@ -27,11 +27,11 @@ All skills follow a Structured Artifact Write/Update Protocol: resolve scope and
 
 ## Included skills
 
-- `safe-start` — create new projects with structured intent, data, architecture, contracts, validation, and handoff artifacts.
+- `safe-start` — create new projects with structured intent, prioritized quality attributes, data, architecture, contracts, validation, and handoff artifacts.
 - `codebase-recon` — reconstruct existing codebases into structured YAML artifacts under the resolved structured docs root.
 - `safe-change` — make documented-codebase changes using structured artifacts and update owner YAML only when durable semantics change.
 - `arch-code-review` — review diffs against structured architecture, data, invariant, dependency, risk, contract, and test artifacts from the resolved structured docs root.
-- `structured-doc-validate` — validate structured YAML docs for schema shape, reference integrity, evidence quality, coverage, and granularity.
+- `structured-doc-validate` — validate structured YAML docs for schema shape, shared schema coverage, reference integrity, evidence quality, coverage, and granularity.
 - `structured-docs-migration` — migrate deprecated prose-style docs into canonical structured YAML artifacts under the resolved structured docs root.
 
 ## Included prompt templates
@@ -119,16 +119,16 @@ Domain-like focus writes under:
 - `scopes.yaml`: scope routing and ownership.
 - `repo-inventory.yaml`: structure, entry points, command index, boundaries.
 - `validation-baseline.yaml`: command status, blockers, validation order.
-- `project-intent.yaml`: goals, users, journeys, constraints.
-- `architecture.yaml`: components, style, side-effect boundaries.
-- `data-flow.yaml`: typed flow graph and error states.
-- `data-model.yaml`: entities, IDs, schemas, lifecycles, serialized formats.
+- `project-intent.yaml`: goals, users, journeys, constraints, prioritized quality attributes, operating constraints.
+- `architecture.yaml`: components, style, style rationale, alternatives, side-effect boundaries, reliability/observability/security expectations.
+- `data-flow.yaml`: typed flow graph, trust boundaries, sensitive-data handling, error states.
+- `data-model.yaml`: entities, IDs, schemas, lifecycles, serialized formats, retention/compliance notes.
 - `invariants.yaml`: rules, forbidden states, enforcement.
 - `dependency-rules.yaml`: layers, allowed/forbidden dependencies, violations.
 - `design-issues.yaml`: drift, deferred decisions, ownership gaps.
-- `risk-register.yaml`: failure modes and suggested tests/fixes.
-- `contracts.yaml`: APIs, schemas, events, generated clients, persistence/deployment/env contracts.
-- `testing-strategy.yaml`: test topology, gaps, risk-to-test priorities.
+- `risk-register.yaml`: failure modes, affected refs, recommended actions, and suggested tests/fixes.
+- `contracts.yaml`: APIs, schemas, events, generated clients, persistence/deployment/env/auth/telemetry contracts.
+- `testing-strategy.yaml`: test topology, quality-attribute coverage, gaps, risk-to-test priorities.
 - `change-guide.yaml`: workflow routing and checklists.
 - `adr.yaml`: structured ADR records.
 - `agent-operating-guide.yaml`: structured operational rules for agents; root `AGENTS.md` mirrors compact harness-facing guidance.
@@ -139,7 +139,7 @@ Runtime schema assets are shared under `skills/_shared/references/`. Skills load
 
 Project docs outside the shared runtime refs may exist in the source repo, but are not runtime instructions for installed extension users.
 
-Validation is best-effort by agent inspection and re-read. The `structured-doc-validate` skill gives a read-only four-layer audit workflow for schema validity, references, evidence, coverage, and granularity.
+Validation is best-effort by agent inspection and re-read. The `structured-doc-validate` skill gives a read-only four-layer audit workflow for schema validity, shared schema coverage, references, evidence, coverage, and granularity. Shared schemas are user-facing contracts too, so older artifacts missing newly required fields should fail validation until repaired or migrated.
 
 ## Package structure
 
