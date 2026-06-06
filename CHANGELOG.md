@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-06-06
+
 ### Added
 
 - Added stronger safe-start schema coverage for `project-intent`, `architecture`, `data-flow`, `data-model`, `risk-register`, `testing-strategy`, `contracts`, and `adr` artifacts so end-users and validators can catch missing greenfield architecture fields.
