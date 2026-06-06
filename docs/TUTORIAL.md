@@ -69,7 +69,7 @@ For small repos:
 /recon-all
 ```
 
-For larger repos, run bounded passes:
+For larger repos, run bounded passes. Pass 1 now seeds not only inventory/validation, but also the initial `project-intent.yaml` from observed repo evidence, including likely quality attributes and operating constraints when they can be inferred:
 
 ```text
 /recon-01-inventory
@@ -130,7 +130,7 @@ Then use the matching workflow:
 /risk-fix <risk-id>
 ```
 
-Safe-change reads `<docs-root>/repo/scopes.yaml`, selects relevant owner YAML artifacts, and updates only canonical owner files when durable semantics change. It uses repo-local docs only when `<workspace_root>/docs/agent/api` already exists; otherwise it uses the global overlay root. It may update root `AGENTS.md` only when `agent-operating-guide.yaml` changes.
+Safe-change reads `<docs-root>/repo/scopes.yaml`, selects relevant owner YAML artifacts, and updates only canonical owner files when durable semantics change. It uses repo-local docs only when `<workspace_root>/docs/agent/api` already exists; otherwise it uses the global overlay root. It may update root `AGENTS.md` only when `agent-operating-guide.yaml` changes. Preflight should treat missing now-required schema fields in older artifacts as blockers or repair prerequisites rather than silently proceeding.
 
 ## Review
 

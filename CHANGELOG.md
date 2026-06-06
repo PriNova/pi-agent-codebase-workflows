@@ -8,11 +8,14 @@ All notable changes to this project are documented here.
 
 - Added stronger safe-start schema coverage for `project-intent`, `architecture`, `data-flow`, `data-model`, `risk-register`, `testing-strategy`, `contracts`, and `adr` artifacts so end-users and validators can catch missing greenfield architecture fields.
 - Added pass-specific safe-start prompt guidance for prioritized quality attributes, trust boundaries, sensitive data, architecture tradeoffs, reliability, observability, security assumptions, quality-attribute verification, and thin-slice validation.
+- Added parallel `codebase-recon` and `safe-change` prompt/reference guidance so reconstruction and change workflows also surface intent, quality attributes, trust boundaries, architecture rationale, risk actions, and schema blockers instead of relying on the older lighter artifact semantics.
 - Added validation guidance that missing shared schema coverage or missing now-required fields in legacy artifacts should fail `/validate-structured-docs` audits.
 
 ### Changed
 
 - Upgraded `safe-start` workflow semantics so greenfield passes explicitly capture prioritized quality attributes, operating constraints, success metrics, trust boundaries, sensitive data handling, architecture alternatives/tradeoffs, reliability expectations, observability expectations, and security assumptions before scaffolding.
+- Upgraded `codebase-recon` so inventory can seed `project-intent.yaml`, architecture/risk/testing passes align with the richer schemas, and consolidation can backfill missing now-required fields when evidence exists.
+- Upgraded `safe-change` preflight/design/implementation guidance so changes explicitly account for documented quality attributes, operating constraints, trust boundaries, reliability/observability/security expectations, and schema blockers in older artifacts.
 - Clarified README/tutorial/runtime docs that shared schemas are user-facing contracts and that validation should treat older artifacts missing newly required fields as invalid until repaired or migrated.
 
 ### Fixes

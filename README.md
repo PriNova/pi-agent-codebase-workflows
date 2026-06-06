@@ -28,8 +28,8 @@ All skills follow a Structured Artifact Write/Update Protocol: resolve scope and
 ## Included skills
 
 - `safe-start` — create new projects with structured intent, prioritized quality attributes, data, architecture, contracts, validation, and handoff artifacts.
-- `codebase-recon` — reconstruct existing codebases into structured YAML artifacts under the resolved structured docs root.
-- `safe-change` — make documented-codebase changes using structured artifacts and update owner YAML only when durable semantics change.
+- `codebase-recon` — reconstruct existing codebases into structured YAML artifacts under the resolved structured docs root, including inferred intent/quality/risk context when evidence exists.
+- `safe-change` — make documented-codebase changes using structured artifacts and update owner YAML only when durable semantics change, treating schema gaps in older artifacts as blockers or repair work when needed.
 - `arch-code-review` — review diffs against structured architecture, data, invariant, dependency, risk, contract, and test artifacts from the resolved structured docs root.
 - `structured-doc-validate` — validate structured YAML docs for schema shape, shared schema coverage, reference integrity, evidence quality, coverage, and granularity.
 - `structured-docs-migration` — migrate deprecated prose-style docs into canonical structured YAML artifacts under the resolved structured docs root.
